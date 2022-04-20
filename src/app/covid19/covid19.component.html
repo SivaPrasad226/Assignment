@@ -1,0 +1,89 @@
+<mat-toolbar>
+      <button mat-icon-button *ngIf="sidenav.mode === 'over' " (click)="sidenav.toggle()">
+         <mat-icon *ngIf="!sidenav.opened">
+           menu
+          </mat-icon >
+          <mat-icon *ngIf="sidenav.opened">
+            close
+          </mat-icon >
+      </button>
+     <span>Responsive side navigation  </span>
+  </mat-toolbar>  
+  <mat-sidenav-container>      
+        <mat-sidenav #sidenav="matSidenav">
+          <button mat-button class="menu-button">
+              <mat-icon>home</mat-icon>&nbsp;
+              <span>Dash Board</span>
+          </button><br>
+          <button mat-button class="menu-button">
+            <mat-form-field>
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+            </mat-form-field>              
+          </button>         
+          <mat-divider></mat-divider>           
+      </mat-sidenav>     
+      <mat-sidenav-content class="content mat-elevation-z8"> 
+ <div>
+  <span> Summary</span>
+   <mat-grid-list cols="4" rowHeight="2:1" >
+    <mat-grid-tile >Cases</mat-grid-tile>
+    <mat-grid-tile>Recovered</mat-grid-tile>
+    <mat-grid-tile>Active </mat-grid-tile>
+    <mat-grid-tile>Critical</mat-grid-tile>
+  </mat-grid-list><br>  
+  <!-- <mat-grid-list cols="4" rowHeight="2:1">
+    <mat-grid-tile *ngFor="let card of cards">
+      <mat-card class="my-card">
+        <mat-card-title>{{card.title}}</mat-card-title>
+        <mat-card-content>
+           {{card.content}}
+        </mat-card-content>
+      </mat-card> 
+    </mat-grid-tile>
+  </mat-grid-list>  -->
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">   
+  </mat-form-field>
+<table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" [hiddenColumns]="[0]" matSort>
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Country Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.country}} </td>
+    </ng-container>  
+    <ng-container matColumnDef="cases">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Cases </th>
+      <td mat-cell *matCellDef="let element"> {{element.cases}} </td>
+    </ng-container>
+    <ng-container matColumnDef="todayCases">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Today Cases </th>
+      <td mat-cell *matCellDef="let element"> {{element.todayCases}} </td>
+    </ng-container>
+    <ng-container matColumnDef="deaths">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Death </th>
+      <td mat-cell *matCellDef="let element"> {{element.deaths}} </td>
+    </ng-container>
+     <ng-container matColumnDef="todayDeaths">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Today Death </th>
+        <td mat-cell *matCellDef="let element"> {{element.todayDeaths}} </td>
+      </ng-container>
+      <ng-container matColumnDef="recovered">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Recovered </th>
+        <td mat-cell *matCellDef="let element"> {{element.recovered}} </td>
+      </ng-container>
+      <ng-container matColumnDef="active">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Active </th>
+        <td mat-cell *matCellDef="let element"> {{element.active}} </td>
+      </ng-container>
+      <ng-container matColumnDef="critical">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Critical </th>
+        <td mat-cell *matCellDef="let element"> {{element.critical}} </td>
+      </ng-container>      
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>  
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div> 
+      </mat-sidenav-content>
+  </mat-sidenav-container>
+    
